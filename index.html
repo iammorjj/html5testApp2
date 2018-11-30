@@ -32,6 +32,9 @@
         </style>
     </head>
   <body>
+    <audio id="FACE">
+      <source src="./FACE.mp3">
+    </audio>
     <div id="loading">
         <progress value="0" max="100" id="progress"></progress>
       <div id="status">Downloading...</div>
@@ -44,6 +47,9 @@
     <script type='text/javascript'>
       var statusElement = document.getElementById('status');
       var progressElement = document.getElementById('progress');
+
+      var face = document.getElementById('FACE');
+      var incr=0;
 
       var Module = {
         Zlib:
@@ -97,10 +103,13 @@ k.p.toString(16)+", data=0x"+p.toString(16)))}return m};t.L=function(a){this.j=a
           // application robust, you may want to override this behavior before shipping!
           // See http://www.khronos.org/registry/webgl/specs/latest/1.0/#5.15.2
           canvas.addEventListener("webglcontextlost", function(e) { alert('WebGL context lost. You will need to reload the page.'); e.preventDefault(); }, false);
-
           return canvas;
         })(),
         setStatus: function(text, current, total) {
+          // if(text == "All downloads complete."){
+          //   if(incr==1) {face.play();}
+          //   else incr++;
+          // }
           if (text.indexOf('...') > 0 && text.indexOf('/') > 0) {
             current = text.split('/')[0];
             total = text.split('/')[1];
@@ -142,6 +151,9 @@ k.p.toString(16)+", data=0x"+p.toString(16)))}return m};t.L=function(a){this.j=a
           xml.onreadystatechange = function () {
             switch (this.readyState) {
               case XMLHttpRequest.DONE:     // val=4
+              // var face = document.getElementById("FACE");
+              // face.loop = true;
+              // face.play();
                 if (this.status == 200 && this.response) {
                   Module.setStatus('Unpacking...', 0, 0);
                   var compressed = new Uint8Array(this.response);
@@ -190,8 +202,10 @@ k.p.toString(16)+", data=0x"+p.toString(16)))}return m};t.L=function(a){this.j=a
           xml.send(null);
     </script>
     <script>
-      window.addEventListener('load',function(){window.focus()});
+      window.addEventListener('load',function(){
+        window.focus();});
       window.addEventListener('mousedown', function () {
+        face.play();
         document.activeElement.blur();
         window.focus();
       }, true);
