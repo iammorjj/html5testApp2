@@ -4,9 +4,12 @@
         <title>Downloading: screenProblem</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+        <meta http-equiv="Pragma" content="no-cache" />
+        <meta http-equiv="Expires" content="0" />
         <style>
             body {
-              background-color: rgb(231, 216, 148);
+              background-color: white;
             }
             body > div {
                 position: absolute;
@@ -27,14 +30,15 @@
                 border-radius: 3px;
                 box-shadow: 0 2px 3px rgba(0,0,0,.5) inset;
                 width: 50%;
-                height: 0px
+                height: 8px
             }
         </style>
     </head>
   <body>
-    <div id="loading">
+    <div id="loading"> loading
         <progress value="0" max="100" id="progress"></progress>
       <div id="status">Downloading...</div>
+      <div></div>
     </div>
 
     <div>
@@ -101,12 +105,18 @@ k.p.toString(16)+", data=0x"+p.toString(16)))}return m};t.L=function(a){this.j=a
           return canvas;
         })(),
         setStatus: function(text, current, total) {
-          if (text.indexOf('...') > 0 && text.indexOf('/') > 0) {
-            current = text.split('/')[0];
-            total = text.split('/')[1];
-            current = current.valueOf();
-            total = total.valueOf();
-            text = "Loading... " + current + '/' + total;
+          //console.log(1);
+          var a = text.split('...');
+          if (a.length > 1) {
+            var caption = a[0];
+            a = a[1].split('/');
+            if (a.length > 1)
+            {
+              var b = a[0].split('(')
+              current = isNaN(b[1]) ? 0 : Number(b[1])
+              var b = a[1].split(')')
+              total = isNaN(b[0]) ? 0 : Number(b[0])
+            }
           }
           if (total > 0) {
             if (Module.setStatus.hasOwnProperty('last') == false) Module.setStatus.last = 0;
@@ -125,6 +135,7 @@ k.p.toString(16)+", data=0x"+p.toString(16)))}return m};t.L=function(a){this.j=a
           this.totalDependencies = Math.max(this.totalDependencies, left);
           Module.setStatus(left ? 'Preparing... (' + (this.totalDependencies-left) + '/' + this.totalDependencies + ')' : 'All downloads complete.',
             this.totalDependencies-left, this.totalDependencies);
+            console.log(1);
         }
       };
       Module.setStatus('Downloading...', 0, 0);
