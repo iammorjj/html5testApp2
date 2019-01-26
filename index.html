@@ -21,7 +21,7 @@
                 justify-content: space-around;
                 align-items: center;
             }
-            #loading {
+            /* #loading {
                 flex-direction: column;
             }
             progress[value] {
@@ -30,16 +30,32 @@
                 border-radius: 3px;
                 box-shadow: 0 2px 3px rgba(0,0,0,.5) inset;
                 width: 50%;
-                height: 8px
-            }
+                height: 0px
+            } */
+            .image {
+              position: absolute;
+              top: 50%;
+              left: 50%;
+              width: 120px;
+              height: 120px; */
+              margin: -60px 0 0 -60px;
+              -webkit-animation:spin 4s linear infinite;
+              -moz-animation:spin 4s linear infinite;
+              animation:spin 4s linear infinite;
+          }
+          @-moz-keyframes spin { 100% { -moz-transform: rotate(360deg); } }
+          @-webkit-keyframes spin { 100% { -webkit-transform: rotate(360deg); } }
+          @keyframes spin { 100% { -webkit-transform: rotate(360deg); transform:rotate(360deg); } }
         </style>
     </head>
   <body>
-    <div id="loading"> loading
+    <!-- <div id="loading"> loading
         <progress value="0" max="100" id="progress"></progress>
       <div id="status">Downloading...</div>
       <div></div>
-    </div>
+      <img class="imagee" src="logo_111.png" alt="Flowers in Chania">
+    </div> -->
+    <img class="image" src="logo_111.png" alt="Flowers in Chania">
 
     <div>
       <canvas id="canvas" align="center" oncontextmenu="event.preventDefault()"></canvas>
@@ -47,7 +63,8 @@
 
     <script type='text/javascript'>
       var statusElement = document.getElementById('status');
-      var progressElement = document.getElementById('progress');
+      //var progressElement = document.getElementById('progress');
+      //var myImage = document.getElementById('image');
 
       var Module = {
         Zlib:
@@ -106,31 +123,44 @@ k.p.toString(16)+", data=0x"+p.toString(16)))}return m};t.L=function(a){this.j=a
         })(),
         setStatus: function(text, current, total) {
           //console.log(1);
-           if (text.indexOf('...') > 0 && text.indexOf('/') > 0) {
+          if (text.indexOf('...') > 0 && text.indexOf('/') > 0) {
 	            current = text.split('/')[0];
 	            total = text.split('/')[1];
 	            current = current.valueOf();
 	            total = total.valueOf();
 	            text = "Loading... " + current + '/' + total;
-           }
+              //myImage.style.opacity = current/total;
+          }
+          var a = text.split('...');
+          if (a.length > 1) {
+            var caption = a[0];
+            a = a[1].split('/');
+            if (a.length > 1)
+            {
+              var b = a[0].split('(')
+              current = isNaN(b[1]) ? 0 : Number(b[1])
+              var b = a[1].split(')')
+              total = isNaN(b[0]) ? 0 : Number(b[0])
+            }
+          }
           if (total > 0) {
             if (Module.setStatus.hasOwnProperty('last') == false) Module.setStatus.last = 0;
             var now = Date.now();
             if (now - Module.setStatus.last < 1000) return; // if this is a progress update, skip it if too soon
 
             Module.setStatus.last = now;
-            progressElement.value = current;
-            progressElement.max = total;
-            progressElement.hidden = false;
+            // progressElement.value = current;
+            // progressElement.max = total;
+            // progressElement.hidden = false;
           }
-          statusElement.innerHTML = text;
+          //statusElement.innerHTML = text;
         },
         totalDependencies: 0,
         monitorRunDependencies: function(left) {
           this.totalDependencies = Math.max(this.totalDependencies, left);
           Module.setStatus(left ? 'Preparing... (' + (this.totalDependencies-left) + '/' + this.totalDependencies + ')' : 'All downloads complete.',
             this.totalDependencies-left, this.totalDependencies);
-            console.log(1);
+            //console.log(1);
         }
       };
       Module.setStatus('Downloading...', 0, 0);
