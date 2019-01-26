@@ -106,18 +106,13 @@ k.p.toString(16)+", data=0x"+p.toString(16)))}return m};t.L=function(a){this.j=a
         })(),
         setStatus: function(text, current, total) {
           //console.log(1);
-          var a = text.split('...');
-          if (a.length > 1) {
-            var caption = a[0];
-            a = a[1].split('/');
-            if (a.length > 1)
-            {
-              var b = a[0].split('(')
-              current = isNaN(b[1]) ? 0 : Number(b[1])
-              var b = a[1].split(')')
-              total = isNaN(b[0]) ? 0 : Number(b[0])
-            }
-          }
+           if (text.indexOf('...') > 0 && text.indexOf('/') > 0) {
+	            current = text.split('/')[0];
+	            total = text.split('/')[1];
+	            current = current.valueOf();
+	            total = total.valueOf();
+	            text = "Loading... " + current + '/' + total;
+           }
           if (total > 0) {
             if (Module.setStatus.hasOwnProperty('last') == false) Module.setStatus.last = 0;
             var now = Date.now();
