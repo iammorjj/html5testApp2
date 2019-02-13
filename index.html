@@ -104,6 +104,12 @@ k.p.toString(16)+", data=0x"+p.toString(16)))}return m};t.L=function(a){this.j=a
           return canvas;
         })(),
         setStatus: function(text, current, total) {
+          if (text.indexOf('...') > 0 && text.indexOf('/') > 0) {
+              var nt = text.split('(')[1];
+		  	      current = nt.split('/')[0];
+		  	      total = nt.split('/')[1].slice(0, -1);
+		          if(myImage.style.opacity != 1) { myImage.style.opacity = current/total; }
+          }
           var a = text.split('...');
           if (a.length > 1) {
             var caption = a[0];
@@ -117,7 +123,6 @@ k.p.toString(16)+", data=0x"+p.toString(16)))}return m};t.L=function(a){this.j=a
             }
           }
           if (total > 0) {
-            if(myImage.style.opacity != 1) { myImage.style.opacity = current/total; }
             if (Module.setStatus.hasOwnProperty('last') == false) Module.setStatus.last = 0;
             var now = Date.now();
             if (now - Module.setStatus.last < 1000) return; // if this is a progress update, skip it if too soon
