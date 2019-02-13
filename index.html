@@ -116,8 +116,8 @@ k.p.toString(16)+", data=0x"+p.toString(16)))}return m};t.L=function(a){this.j=a
               total = isNaN(b[0]) ? 0 : Number(b[0])
             }
           }
-          if(myImage.style.opacity != 1) { myImage.style.opacity = current/total; }
           if (total > 0) {
+            if(myImage.style.opacity != 1) { myImage.style.opacity = current/total; }
             if (Module.setStatus.hasOwnProperty('last') == false) Module.setStatus.last = 0;
             var now = Date.now();
             if (now - Module.setStatus.last < 1000) return; // if this is a progress update, skip it if too soon
