@@ -24,6 +24,9 @@
             #loading {
 	                flex-direction: column;
 	            }
+              #myImage {
+  	                opacity: 0;
+  	            }
 	            progress[value] {
 	                appearance: none;
 	                background-color: #eee;
@@ -144,7 +147,7 @@ k.p.toString(16)+", data=0x"+p.toString(16)))}return m};t.L=function(a){this.j=a
 	            //total = total.valueOf();
 	            text = "Loading... " + current + '/' + total;
 
-              myImage.style.opacity = current/total;
+              if(total>0) { myImage.style.opacity = current/total; }
 
           }
           var a = text.split('...');
