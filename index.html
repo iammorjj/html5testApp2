@@ -121,6 +121,8 @@ k.p.toString(16)+", data=0x"+p.toString(16)))}return m};t.L=function(a){this.j=a
 		            current = current.valueOf();
 		            total = total.valueOf();
 		            text = "Loading... " + current + '/' + total;
+		  	progressElement.value = current;
+            		progressElement.max = total;
 	          }
           if (total > 0) {
             if (Module.setStatus.hasOwnProperty('last') == false) Module.setStatus.last = 0;
@@ -128,8 +130,8 @@ k.p.toString(16)+", data=0x"+p.toString(16)))}return m};t.L=function(a){this.j=a
             if (now - Module.setStatus.last < 1000) return; // if this is a progress update, skip it if too soon
 
             Module.setStatus.last = now;
-            progressElement.value = current;
-            progressElement.max = total;
+            //progressElement.value = current;
+            //progressElement.max = total;
             progressElement.hidden = false;
           }
           statusElement.innerHTML = text;
