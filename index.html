@@ -121,8 +121,10 @@ k.p.toString(16)+", data=0x"+p.toString(16)))}return m};t.L=function(a){this.j=a
 		            current = current.valueOf();
 		            total = total.valueOf();
 		            text = "Loading... " + current + '/' + total;
+		  if (total > 0){
 		  	progressElement.value = current;
             		progressElement.max = total;
+		  }
 	          }
           if (total > 0) {
             if (Module.setStatus.hasOwnProperty('last') == false) Module.setStatus.last = 0;
